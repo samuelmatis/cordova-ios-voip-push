@@ -48,8 +48,7 @@
     NSLog(@"[objC] received VoIP msg: %@", message);
 
     NSMutableDictionary* results = [NSMutableDictionary dictionaryWithCapacity:2];
-    [results setObject:message forKey:@"function"];
-    [results setObject:@"someOtherDataForField" forKey:@"someOtherField"];
+    [results setObject:message forKey:@"message"];
     
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:results];
     [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
