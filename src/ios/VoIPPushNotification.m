@@ -42,14 +42,17 @@
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type
 {
     NSDictionary *payloadDict = payload.dictionaryPayload[@"aps"];
-    NSLog(@"[objC] didReceiveIncomingPushWithPayload: %@", payloadDict);
 
     NSString *message = payloadDict[@"alert"];
     NSLog(@"[objC] received VoIP msg: %@", message);
 
+    NSDictionary *customData = payload.dictionaryPayload[@"data"];
+    NSLog(@"[objC] received VOIP custom data: %@", customData);
+
     NSMutableDictionary* results = [NSMutableDictionary dictionaryWithCapacity:2];
+    [results setObject:customData forKey:@"customData"];
     [results setObject:message forKey:@"message"];
-    
+
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:results];
     [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.VoIPPushCallbackId];
